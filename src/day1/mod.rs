@@ -1,14 +1,14 @@
-use std::fs::File;
 use std::collections::HashSet;
-use std::io::{BufReader, BufRead};
+use std::fs::File;
+use std::io::{BufRead, BufReader};
 
 pub fn part1(filename: &str) -> i32 {
     let file = File::open(filename).expect("file not found");
     let mut total = 0;
     for line in BufReader::new(file).lines() {
-        total = total + line.unwrap().parse::<i32>().unwrap();
+        total += line.unwrap().parse::<i32>().unwrap();
     }
-    return total;
+    total
 }
 
 pub fn part2(filename: &str) -> i32 {
@@ -26,7 +26,7 @@ pub fn part2(filename: &str) -> i32 {
     let mut found = false;
     while !found {
         for value in &values {
-            total = total + value;
+            total += value;
             if frequencies.contains(&total) {
                 found = true;
                 break;
@@ -35,5 +35,5 @@ pub fn part2(filename: &str) -> i32 {
             }
         }
     }
-    return total;
+    total
 }
