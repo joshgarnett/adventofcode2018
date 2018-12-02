@@ -5,7 +5,7 @@ use std::io::{BufRead, BufReader};
 pub fn part1(filename: &str) -> i32 {
     let file = File::open(filename).expect("file not found");
 
-    let mut two_leters = 0;
+    let mut two_letters = 0;
     let mut three_letters = 0;
     let mut letters: HashMap<char, i32> = HashMap::new();
     for line in BufReader::new(file).lines() {
@@ -25,7 +25,7 @@ pub fn part1(filename: &str) -> i32 {
         }
 
         if found_two {
-            two_leters += 1;
+            two_letters += 1;
         }
         if found_three {
             three_letters += 1;
@@ -33,11 +33,11 @@ pub fn part1(filename: &str) -> i32 {
 
         letters.clear();
     }
-    two_leters * three_letters
+    two_letters * three_letters
 }
 
 pub fn part2(filename: &str) -> String {
-    // parse all lines into an array of ints
+    // parse all lines into a vector of chars
     let file = File::open(filename).expect("file not found");
     let mut boxes: Vec<Vec<char>> = Vec::new();
     for line in BufReader::new(file).lines() {
