@@ -2,6 +2,7 @@ extern crate advent;
 
 use advent::day1;
 use advent::day2;
+use advent::day3;
 use std::time::Instant;
 
 fn time<T>(name: &str, filename: &str, f: &Fn(&str) -> T) where T: std::fmt::Debug {
@@ -15,4 +16,6 @@ fn main() {
     time("Day1 Part2", "data/day1-input.txt", &day1::part2);
     time("Day2 Part1", "data/day2-input.txt", &day2::part1);
     time("Day2 Part2", "data/day2-input.txt", &day2::part2);
+    time("Day3 Part1", "data/day3-input.txt", &day3::part1);
+    time("Day3 Part2", "data/day3-input.txt", &day3::part2);
 }
