@@ -42,25 +42,22 @@ fn parse_claims(filename: &str) -> Vec<Claim> {
     claims
 }
 
-pub fn part1(filename: &str) -> i32 {
+pub fn part1(filename: &str) -> usize {
     let claims = parse_claims(filename);
     let mut fabric = [0; FABRIC_SIZE * FABRIC_SIZE];
+    let mut total = 0;
 
     for claim in claims {
         for x in claim.x..(claim.x + claim.size.w) {
             for y in claim.y..(claim.y + claim.size.h) {
-                fabric[x + y * FABRIC_SIZE] += 1;
+                let index = x + y * FABRIC_SIZE;
+                fabric[index] += 1;
+                if fabric[index] == 2 {
+                    total += 1;
+                }
             }
         }
     }
-
-    let mut total = 0;
-    for i in 0..(FABRIC_SIZE * FABRIC_SIZE) {
-        if fabric[i] > 1 {
-            total += 1;
-        }
-    }
-
     total
 }
 
