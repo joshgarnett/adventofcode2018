@@ -14,25 +14,20 @@ fn parse_file(filename: &str) -> Vec<i32> {
 }
 
 fn react(input: &Vec<i32>, skip: i32) -> usize {
-    let size = input.len();
-    let mut stack = vec![0; size];
-    let mut size = 0;
-
+    let mut stack = Vec::with_capacity(input.len());
     for unit in input {
         if *unit == skip || *unit == skip + 32 {
             continue;
         }
-        if size == 0 {
-            stack[size] = *unit;
-            size += 1;
+        if stack.len() == 0 {
+            stack.push(unit)
         } else if (stack[stack.len() - 1] - unit).abs() == 32 {
-            size -= 1;
+            stack.pop();
         } else {
-            stack[size] = *unit;
-            size += 1;
+            stack.push(unit);
         }
     }
-    size
+    stack.len()
 }
 
 pub fn part1(filename: &str) -> usize {
@@ -45,7 +40,6 @@ pub fn part2(filename: &str) -> usize {
     let mut min_length = data.len();
     for i in 65..91 {
         let l = react(&data, i);
-        ;
 
         if l < min_length {
             min_length = l;
