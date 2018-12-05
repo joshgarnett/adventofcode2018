@@ -1,5 +1,6 @@
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use rayon::prelude::*;
 
 fn parse_file(filename: &str) -> Vec<i32> {
     // read all lines and then sort them
@@ -37,15 +38,12 @@ pub fn part1(filename: &str) -> usize {
 
 pub fn part2(filename: &str) -> usize {
     let data = parse_file(filename);
-    let mut min_length = data.len();
-    for i in 65..91 {
-        let l = react(&data, i);
+    (65..91).map(|c| react(&data, c)).min().unwrap()
+}
 
-        if l < min_length {
-            min_length = l;
-        }
-    }
-    min_length
+pub fn part2_parallel(filename: &str) -> usize {
+    let data = parse_file(filename);
+    (65..91).into_par_iter().map(|c| react(&data, c)).min().unwrap()
 }
 
 #[cfg(test)]
@@ -61,5 +59,10 @@ mod tests {
     #[bench]
     fn part2_bench(b: &mut Bencher) {
         b.iter(|| part2("data/day5-input.txt"));
+    }
+
+    #[bench]
+    fn part2_parallel_bench(b: &mut Bencher) {
+        b.iter(|| part2_parallel("data/day5-input.txt"));
     }
 }
