@@ -47,3 +47,19 @@ pub fn part2(filename: &str) -> usize {
     }
     min_length
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[bench]
+    fn part1_bench(b: &mut Bencher) {
+        b.iter(|| part1("data/day5-input.txt"));
+    }
+
+    #[bench]
+    fn part2_bench(b: &mut Bencher) {
+        b.iter(|| part2("data/day5-input.txt"));
+    }
+}
