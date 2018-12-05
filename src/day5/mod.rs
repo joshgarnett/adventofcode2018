@@ -13,48 +13,42 @@ fn parse_file(filename: &str) -> Vec<i32> {
     chars
 }
 
-fn react(chars: &mut Vec<i32>) {
-    loop {
-        let mut index = 0;
-        let start_size = chars.len();
-        while index < chars.len() - 1 {
-            if (chars[index] - chars[index + 1]).abs() == 32 {
-                chars.remove(index);
-                chars.remove(index);
-            } else {
-                index += 1;
-            }
+fn react(input: &Vec<i32>, skip: i32) -> usize {
+    let size = input.len();
+    let mut stack = vec![0; size];
+    let mut size = 0;
+
+    for unit in input {
+        if *unit == skip || *unit == skip + 32 {
+            continue;
         }
-        if start_size == chars.len() {
-            break;
+        if size == 0 {
+            stack[size] = *unit;
+            size += 1;
+        } else if (stack[stack.len() - 1] - unit).abs() == 32 {
+            size -= 1;
+        } else {
+            stack[size] = *unit;
+            size += 1;
         }
     }
+    size
 }
 
 pub fn part1(filename: &str) -> usize {
-    let mut chars = parse_file(filename);
-    react(&mut chars);
-    chars.len()
+    let chars = parse_file(filename);
+    react(&chars, 0)
 }
 
 pub fn part2(filename: &str) -> usize {
     let data = parse_file(filename);
     let mut min_length = data.len();
     for i in 65..91 {
-        let mut chars = data.clone();
-        let mut index = 0;
-        while index < chars.len() {
-            if chars[index] == i || chars[index] == i + 32 {
-                chars.remove(index);
-            } else {
-                index += 1;
-            }
-        }
+        let l = react(&data, i);
+        ;
 
-        react(&mut chars);
-
-        if chars.len() < min_length {
-            min_length = chars.len();
+        if l < min_length {
+            min_length = l;
         }
     }
     min_length
