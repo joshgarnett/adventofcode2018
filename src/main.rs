@@ -4,6 +4,7 @@ use advent::day1;
 use advent::day2;
 use advent::day3;
 use advent::day4;
+use advent::day5;
 use std::time::Instant;
 
 fn time<T>(name: &str, filename: &str, f: &Fn(&str) -> T) where T: std::fmt::Debug {
@@ -21,4 +22,6 @@ fn main() {
     time("Day3 Part2", "data/day3-input.txt", &day3::part2);
     time("Day4 Part1", "data/day4-input.txt", &day4::part1);
     time("Day4 Part2", "data/day4-input.txt", &day4::part2);
+    time("Day5 Part1", "data/day5-input.txt", &day5::part1);
+    time("Day5 Part2", "data/day5-input.txt", &day5::part2);
 }
