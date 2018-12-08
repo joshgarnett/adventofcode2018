@@ -29,11 +29,9 @@ fn parse_tree(filename: &str) -> Node {
 }
 
 fn sum_metadata(node: &Node) -> usize {
-    let mut total: usize = node.metadata.iter().sum();
-    for c in &node.children {
-        total += sum_metadata(&c);
-    }
-    total
+    let children_total = node.children.iter().map(sum_metadata).sum::<usize>();
+    let metadata_total = node.metadata.iter().sum::<usize>();
+    children_total + metadata_total
 }
 
 pub fn part1(filename: &str) -> usize {
@@ -59,4 +57,21 @@ fn sum_metadata_part2(node: &Node) -> usize {
 pub fn part2(filename: &str) -> usize {
     let node = parse_tree(filename);
     sum_metadata_part2(&node)
+}
+
+#[cfg(test)]
+mod tests {
+    use test::Bencher;
+
+    use super::*;
+
+    #[bench]
+    fn part1_bench(b: &mut Bencher) {
+        b.iter(|| part1("data/day8-input.txt"));
+    }
+
+    #[bench]
+    fn part2_bench(b: &mut Bencher) {
+        b.iter(|| part2("data/day8-input.txt"));
+    }
 }
