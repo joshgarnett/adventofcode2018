@@ -29,13 +29,12 @@ impl CircularLinkedList {
         match self.free.pop() {
             None => {
                 // no free nodes, add one
-                let index = &self.used.len();
                 self.used.push(Node {
                     value: 0,
                     previous: 0,
                     next: 0,
                 });
-                *index
+                self.used.len() - 1
             }
             Some(i) => {
                 i
