@@ -1,6 +1,5 @@
 struct Node {
     value: usize,
-    index: usize,
     next: usize,
     previous: usize,
 }
@@ -16,7 +15,6 @@ impl CircularLinkedList {
         let mut values = Vec::with_capacity(capacity);
         values.push(Node {
             value: initial,
-            index: 0,
             previous: 0,
             next: 0,
         });
@@ -34,7 +32,6 @@ impl CircularLinkedList {
                 let index = &self.used.len();
                 self.used.push(Node {
                     value: 0,
-                    index: *index,
                     previous: 0,
                     next: 0,
                 });
@@ -47,7 +44,6 @@ impl CircularLinkedList {
     }
 
     fn insert(&mut self, value: usize) {
-        let l = self.used.len();
         let current_index = self.current_index;
         let old_next = self.used[current_index].next;
 
@@ -93,13 +89,14 @@ impl CircularLinkedList {
 }
 
 pub fn part1() -> usize {
-    calculate_score(459, 71790)
+    calculate_score_fast(459, 71790)
 }
 
 pub fn part2() -> usize {
     calculate_score_fast(459, 71790 * 100)
 }
 
+#[allow(dead_code)]
 fn calculate_score(players: usize, last_marble: usize) -> usize {
     let mut player_scores: Vec<usize> = vec![0; players];
     let mut board: Vec<usize> = Vec::new();
@@ -140,7 +137,19 @@ fn calculate_score_fast(players: usize, last_marble: usize) -> usize {
 
 #[cfg(test)]
 mod tests {
+    use test::Bencher;
+
     use super::*;
+
+    #[bench]
+    fn part1_bench(b: &mut Bencher) {
+        b.iter(|| part1());
+    }
+
+    #[bench]
+    fn part2_bench(b: &mut Bencher) {
+        b.iter(|| part2());
+    }
 
     #[test]
     fn part1_example1() {
