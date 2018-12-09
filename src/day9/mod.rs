@@ -72,6 +72,8 @@ impl CircularLinkedList {
         self.used[next].previous = previous;
         self.free.push(current_index);
 
+        self.current_index = next;
+
         value
     }
 
@@ -125,7 +127,6 @@ fn calculate_score_fast(players: usize, last_marble: usize) -> usize {
         if m % 23 == 0 {
             board.back(7);
             player_scores[(m - 1) % players] += m + board.remove();
-            board.forward(1);
         } else {
             board.forward(1);
             board.insert(m);
