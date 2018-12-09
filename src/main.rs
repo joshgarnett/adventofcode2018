@@ -8,11 +8,18 @@ use advent::day5;
 use advent::day6;
 use advent::day7;
 use advent::day8;
+use advent::day9;
 use std::time::Instant;
 
 fn time<T>(name: &str, filename: &str, f: &Fn(&str) -> T) where T: std::fmt::Debug {
     let start = Instant::now();
     let result = f(filename);
+    println!("{} - result: {:#?} time: {:#?}", name, result, start.elapsed());
+}
+
+fn time_no_file<T>(name: &str, f: &Fn() -> T) where T: std::fmt::Debug {
+    let start = Instant::now();
+    let result = f();
     println!("{} - result: {:#?} time: {:#?}", name, result, start.elapsed());
 }
 
@@ -33,4 +40,6 @@ fn main() {
     time("Day7 Part2", "data/day7-input.txt", &day7::part2);
     time("Day8 Part1", "data/day8-input.txt", &day8::part1);
     time("Day8 Part2", "data/day8-input.txt", &day8::part2);
+    time_no_file("Day9 Part1", &day9::part1);
+    time_no_file("Day9 Part1", &day9::part2);
 }
