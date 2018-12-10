@@ -42,6 +42,6 @@ fn main() {
     time("Day8 Part1", "data/day8-input.txt", &day8::part1);
     time("Day8 Part2", "data/day8-input.txt", &day8::part2);
     time_no_file("Day9 Part1", &day9::part1);
-    time_no_file("Day9 Part1", &day9::part2);
+    time_no_file("Day9 Part2", &day9::part2);
     time("Day10 Part1 & 2", "data/day10-input.txt", &day10::part1_and_2);
 }
